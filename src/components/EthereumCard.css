@@ -1,0 +1,66 @@
+.ethereum-card {
+  position: relative;
+  margin: 0 auto;
+  padding: 1rem;
+  width: 24rem;
+  height: 13.5rem;
+  border: 1px solid #343434;
+  border-radius: 1rem;
+  box-shadow: 2px 2px 16px #141414;
+  background-image: linear-gradient(
+    135deg,
+    rgb(128, 92, 0),
+    rgb(160, 128, 32),
+    rgb(192, 160, 48),
+    rgb(255, 224, 64),
+    rgb(192, 160, 48),
+    rgb(160, 128, 32),
+    rgb(128, 92, 0)
+  );
+
+  opacity: 1;
+  transition: all 2s ease;
+}
+
+.ethereum-card:hover {
+  opacity: 0.8;
+}
+
+.ethereum-card h3 {
+  margin: 0;
+  padding: 0;
+  color: rgb(72, 64, 0);
+  text-shadow: 2px 2px 8px gray;
+}
+
+.ethereum-card .logo svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  padding: 1rem;
+  color: rgb(128, 112, 16);
+  border: 1px solidrgb(72, 64, 8);
+  border-radius: 50%;
+  box-shadow: 0 0 16px rgb(144, 128, 16);
+}
+
+.ethereum-card .account,
+.ethereum-card .balance {
+  position: absolute;
+  bottom: 1rem;
+  text-align: center;
+  font-size: 0.7rem;
+  line-height: normal;
+  color: rgb(72, 64, 8);
+  text-shadow: 2px 2px 16px #141414;
+}
+
+.ethereum-card .account {
+  left: 1rem;
+}
+
+.ethereum-card .balance {
+  right: 1rem;
+}
