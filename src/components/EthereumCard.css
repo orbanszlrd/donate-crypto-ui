@@ -47,9 +47,9 @@
 }
 
 .ethereum-card .account,
+.ethereum-card .network,
 .ethereum-card .balance {
   position: absolute;
-  bottom: 1rem;
   text-align: center;
   font-size: 0.7rem;
   line-height: normal;
@@ -57,10 +57,18 @@
   text-shadow: 2px 2px 16px #141414;
 }
 
+.ethereum-card .network {
+  left: 1rem;
+  top: 1rem;
+  text-transform: capitalize;
+}
+
 .ethereum-card .account {
+  bottom: 1rem;
   left: 1rem;
 }
 
 .ethereum-card .balance {
+  bottom: 1rem;
   right: 1rem;
 }

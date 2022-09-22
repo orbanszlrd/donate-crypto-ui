@@ -1,16 +1,14 @@
 import { FaEthereum } from 'react-icons/fa';
+import { AccountType } from '../context/EthereumContext';
 import addressShortener from '../utils/addressShortener';
 import './EthereumCard.css';
 
 export type EthereumCardProps = {
-  account: {
-    address: string;
-    balance: string;
-  };
+  account: AccountType;
 };
 
 const EthereumCard = ({ account }: EthereumCardProps) => {
-  const { address, balance } = account;
+  const { address, network, balance } = account;
 
   return (
     <article className="ethereum-card">
@@ -22,6 +20,9 @@ const EthereumCard = ({ account }: EthereumCardProps) => {
         <>
           <div className="account" title={address}>
             Address: {addressShortener(address)}
+          </div>
+          <div className="network" title={network.name}>
+            {network.name} network
           </div>
           <div className="balance" title={balance}>
             Balance: {balance.slice(0, 6)} ETH

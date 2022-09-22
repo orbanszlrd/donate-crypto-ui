@@ -13,6 +13,15 @@ const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS;
 
 const { ethereum } = window as any;
 
+export type AccountType = {
+  address: string;
+  balance: string;
+  network: {
+    name: string;
+    chainId: number;
+  };
+};
+
 export type EthereumContextType = {
   isLoading: boolean;
   errorMessage: string;
@@ -20,10 +29,7 @@ export type EthereumContextType = {
   network: ethers.providers.Network | null;
   contract: ethers.Contract | null;
   signer: ethers.Signer | null;
-  account: {
-    address: string;
-    balance: string;
-  };
+  account: AccountType;
   contractBalance: string;
   connectAccount(): void;
   donateCrypto(amount: string): void;
@@ -49,10 +55,14 @@ export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
   const [contract, setContract] = useState<ethers.Contract | null>(null);
   const [contractBalance, setContractBalance] = useState('');
   const [signer, setSigner] = useState<ethers.Signer | null>(null);
-  const [account, setAccount] = useState<{
-    address: string;
-    balance: string;
-  }>({ address: '', balance: '' });
+  const [account, setAccount] = useState<AccountType>({
+    address: '',
+    balance: '',
+    network: {
+      name: '',
+      chainId: 0,
+    },
+  });
 
   const ethereumExists = (): boolean => {
     try {
@@ -131,6 +141,7 @@ export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
 
       try {
         const provider = new ethers.providers.Web3Provider(ethereum);
+        const network = await provider.getNetwork();
 
         if (signer) {
           const address = await signer.getAddress();
@@ -138,7 +149,11 @@ export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
             await provider.getBalance(address)
           );
 
-          setAccount({ address, balance });
+          setAccount({
+            address,
+            balance,
+            network: { name: network?.name, chainId: network?.chainId },
+          });
           setIsLoading(false);
         }
       } catch (error) {
