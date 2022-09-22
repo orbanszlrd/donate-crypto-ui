@@ -27,21 +27,23 @@
 }
 
 .ethereum-card h3 {
+  position: absolute;
   margin: 0;
   padding: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   color: rgb(72, 64, 0);
   text-shadow: 2px 2px 8px gray;
 }
 
 .ethereum-card .logo svg {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 1rem;
+  right: 1rem;
   margin: 0;
-  padding: 1rem;
+  padding: 0.4rem;
   color: rgb(128, 112, 16);
-  border: 1px solidrgb(72, 64, 8);
   border-radius: 50%;
   box-shadow: 0 0 16px rgb(128, 112, 16);
 }

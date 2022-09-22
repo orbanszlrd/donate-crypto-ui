@@ -14,7 +14,7 @@ const EthereumCard = ({ account }: EthereumCardProps) => {
     <article className="ethereum-card">
       <h3>Ethereum</h3>
       <div className="logo">
-        <FaEthereum size={92} />
+        <FaEthereum size={32} />
       </div>
       {address && balance ? (
         <>
