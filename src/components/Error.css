@@ -1,0 +1,10 @@
+.Error {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 0.5rem;
+  text-align: center;
+  background-color: orangered;
+  color: whitesmoke;
+}
