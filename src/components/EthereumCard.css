@@ -43,7 +43,7 @@
   color: rgb(128, 112, 16);
   border: 1px solidrgb(72, 64, 8);
   border-radius: 50%;
-  box-shadow: 0 0 16px rgb(144, 128, 16);
+  box-shadow: 0 0 16px rgb(128, 112, 16);
 }
 
 .ethereum-card .account,

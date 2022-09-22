@@ -1,0 +1,42 @@
+.HomePage {
+  padding: 2rem 0;
+}
+
+.HomePage section {
+  margin: 2rem auto;
+  width: 24rem;
+}
+
+.HomePage section div {
+  margin: 1rem 0;
+}
+
+.HomePage input {
+  width: 6rem;
+  padding: 0.8rem;
+  border-radius: 0.4rem;
+  border: 1px solid whitesmoke;
+}
+
+.HomePage label {
+  padding: 0.8rem;
+}
+
+.HomePage button {
+  margin: 0;
+  padding: 0.8rem;
+  border-radius: 0.4rem;
+  background-image: linear-gradient(180deg, green, darkgreen);
+  border: 1px solid whitesmoke;
+  color: whitesmoke;
+  width: 100%;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 0.2rem;
+  outline: none;
+}
+
+.HomePage button:hover {
+  background-image: linear-gradient(180deg, rgb(32, 128, 32), green);
+}
