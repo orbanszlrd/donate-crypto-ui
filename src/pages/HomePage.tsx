@@ -15,8 +15,8 @@ function HomePage() {
     donateCrypto,
   } = useContext(EthereumContext);
 
-  const minAmount = '0.1';
-  const [amount, setAmount] = useState(minAmount);
+  const minAmount = '0.001';
+  const [amount, setAmount] = useState('0.1');
 
   return (
     <div className="HomePage">
@@ -42,20 +42,26 @@ function HomePage() {
                   donateCrypto(amount);
                 }}
               >
-                <div>
-                  <label>Amount</label>
-                  <input
-                    type="number"
-                    placeholder={minAmount}
-                    step={minAmount}
-                    min={minAmount}
-                    value={amount}
-                    onInput={(e) => setAmount(e.currentTarget.value)}
-                  />
-                  <label>ETH</label>
-                </div>
-                <div>
-                  <button type="submit">Donate Cypto</button>
+                <div className="donation-form">
+                  <div>
+                    <button
+                      type="submit"
+                      disabled={account.network.chainId !== 5}
+                    >
+                      Donate
+                    </button>
+                  </div>
+                  <div>
+                    <input
+                      type="number"
+                      placeholder={minAmount}
+                      step={minAmount}
+                      min={minAmount}
+                      value={amount}
+                      onInput={(e) => setAmount(e.currentTarget.value)}
+                    />
+                    <label>ETH</label>
+                  </div>
                 </div>
               </form>
             )}

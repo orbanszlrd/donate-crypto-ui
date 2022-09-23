@@ -46,7 +46,7 @@ export const EthereumContext = createContext<EthereumContextType>(
 export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
   children,
 }) => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [provider, setProvider] = useState<ethers.providers.Provider | null>(
     null
@@ -123,22 +123,16 @@ export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
 
   const connectAccount = async () => {
     if (ethereumExists()) {
-      setIsLoading(true);
-
       try {
         await ethereum.request({
           method: 'eth_requestAccounts',
         });
-
-        retrieveSigner();
       } catch (error) {}
     }
   };
 
   const updateAccount = async () => {
     if (ethereumExists()) {
-      setIsLoading(true);
-
       try {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const network = await provider.getNetwork();
@@ -152,12 +146,25 @@ export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
           setAccount({
             address,
             balance,
-            network: { name: network?.name, chainId: network?.chainId },
+            network: { name: network.name, chainId: network.chainId },
           });
-          setIsLoading(false);
+
+          if (network.chainId != 5) {
+            setErrorMessage('Please connect to Goerli network!');
+          } else {
+            setErrorMessage('');
+          }
+        } else {
         }
       } catch (error) {
-        setIsLoading(false);
+        setAccount({
+          address: '',
+          balance: '',
+          network: {
+            name: '',
+            chainId: 0,
+          },
+        });
       }
     }
   };
@@ -181,10 +188,20 @@ export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
     }
   };
 
-  useEffect(() => {
+  const init = async () => {
+    ethereum.on('chainChanged', refreshEthereumData);
+    ethereum.on('accountsChanged', refreshEthereumData);
+    refreshEthereumData();
+  };
+
+  const refreshEthereumData = () => {
     retrieveProviderData();
     retrieveContract();
     retrieveSigner();
+  };
+
+  useEffect(() => {
+    init();
   }, []);
 
   useEffect(() => {

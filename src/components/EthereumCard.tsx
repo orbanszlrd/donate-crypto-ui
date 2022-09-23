@@ -25,7 +25,7 @@ const EthereumCard = ({ account }: EthereumCardProps) => {
             {network.name} network
           </div>
           <div className="balance" title={balance}>
-            Balance: {balance.slice(0, 6)} ETH
+            Balance: {Number(balance).toFixed(4)} ETH
           </div>
         </>
       ) : null}
