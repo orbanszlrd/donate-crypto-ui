@@ -21,16 +21,16 @@
   width: 75%;
   padding: 0.8rem;
   border-radius: 0.4rem;
-  background-color: #232323;
+  background-color: #242424;
   color: whitesmoke;
-  border: 1px solid #343434;
+  border: 1px solid #323232;
   font-size: 0.9rem;
   font-weight: normal;
   outline: none;
 }
 
 .HomePage input:focus {
-  border-color: gray;
+  border-color: #484848;
 }
 
 .HomePage label {

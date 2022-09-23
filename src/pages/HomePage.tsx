@@ -10,6 +10,7 @@ function HomePage() {
     isLoading,
     errorMessage,
     account,
+    contractNetwork,
     contractBalance,
     connectAccount,
     donateCrypto,
@@ -25,7 +26,9 @@ function HomePage() {
         <Loader />
       ) : (
         <>
-          <h4>Contract balance: {contractBalance} ETH</h4>
+          <h4 style={{ textShadow: '1px 1px 8px #242424' }}>
+            Contract balance: {contractBalance} ETH
+          </h4>
           <EthereumCard account={account} />
 
           <section>
@@ -46,7 +49,9 @@ function HomePage() {
                   <div>
                     <button
                       type="submit"
-                      disabled={account.network.chainId !== 5}
+                      disabled={
+                        account.network.chainId !== contractNetwork?.chainId
+                      }
                     >
                       Donate
                     </button>

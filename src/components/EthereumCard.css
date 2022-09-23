@@ -4,9 +4,9 @@
   padding: 1rem;
   width: 24rem;
   height: 13.5rem;
-  border: 1px solid #343434;
+  border: 1px solid #323232;
   border-radius: 1rem;
-  box-shadow: 2px 2px 16px #141414;
+  box-shadow: 2px 2px 16px #242424;
   background-image: linear-gradient(
     135deg,
     rgb(128, 92, 0),
@@ -56,7 +56,7 @@
   font-size: 0.7rem;
   line-height: normal;
   color: rgb(72, 64, 8);
-  text-shadow: 2px 2px 16px #141414;
+  text-shadow: 2px 2px 16px #161616;
 }
 
 .ethereum-card .network {

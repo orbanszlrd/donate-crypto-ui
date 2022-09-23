@@ -9,8 +9,7 @@
 body {
   margin: 0 auto;
   min-height: 100vh;
-
-  background-color: #343434;
+  background-image: linear-gradient(180deg, #484848, #161616);
   color: whitesmoke;
 }
 

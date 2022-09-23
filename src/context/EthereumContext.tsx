@@ -30,6 +30,7 @@ export type EthereumContextType = {
   contract: ethers.Contract | null;
   signer: ethers.Signer | null;
   account: AccountType;
+  contractNetwork: ethers.providers.Network | null;
   contractBalance: string;
   connectAccount(): void;
   donateCrypto(amount: string): void;
@@ -54,6 +55,8 @@ export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
   const [network, setNetwork] = useState<ethers.providers.Network | null>(null);
   const [contract, setContract] = useState<ethers.Contract | null>(null);
   const [contractBalance, setContractBalance] = useState('');
+  const [contractNetwork, setContractNetwork] =
+    useState<ethers.providers.Network | null>(null);
   const [signer, setSigner] = useState<ethers.Signer | null>(null);
   const [account, setAccount] = useState<AccountType>({
     address: '',
@@ -92,11 +95,12 @@ export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
     if (ethereumExists()) {
       try {
         const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = await provider.getSigner();
 
         const contract = new ethers.Contract(
           contractAddress,
           contractAbi,
-          provider
+          signer
         );
 
         const balance = ethers.utils.formatEther(
@@ -105,6 +109,7 @@ export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
 
         setContract(contract);
         setContractBalance(balance);
+        setContractNetwork(await contract.provider.getNetwork());
       } catch (error) {}
     }
   };
@@ -149,8 +154,8 @@ export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
             network: { name: network.name, chainId: network.chainId },
           });
 
-          if (network.chainId != 5) {
-            setErrorMessage('Please connect to Goerli network!');
+          if (network.chainId !== 5) {
+            setErrorMessage(`Please connect to Goerli network!`);
           } else {
             setErrorMessage('');
           }
@@ -175,17 +180,31 @@ export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
 
       try {
         if (signer && contract) {
-          await signer.sendTransaction({
-            to: contract?.address,
+          const tx = await contract.donate({
             value: ethers.utils.parseEther(amount),
           });
 
+          await listenTransaction(tx, provider!);
+
+          refreshEthereumData();
           setIsLoading(false);
         }
       } catch (error) {
         setIsLoading(false);
       }
     }
+  };
+
+  const listenTransaction = (tx: any, provider: ethers.providers.Provider) => {
+    return new Promise((resolve, reject) => {
+      try {
+        provider.once(tx.hash, (receipt) => {
+          resolve(receipt);
+        });
+      } catch (error) {
+        reject();
+      }
+    });
   };
 
   const init = async () => {
@@ -219,6 +238,7 @@ export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
         signer,
         account,
         connectAccount,
+        contractNetwork,
         contractBalance,
         donateCrypto,
       }}
