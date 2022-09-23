@@ -10,7 +10,6 @@ function HomePage() {
     isLoading,
     errorMessage,
     account,
-    contractNetwork,
     contractBalance,
     connectAccount,
     donateCrypto,
@@ -49,9 +48,7 @@ function HomePage() {
                   <div>
                     <button
                       type="submit"
-                      disabled={
-                        account.network.chainId !== contractNetwork?.chainId
-                      }
+                      disabled={account.network.chainId !== 5}
                     >
                       Donate
                     </button>
