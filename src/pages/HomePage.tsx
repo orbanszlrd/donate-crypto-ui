@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import Error from '../components/Error';
 import EthereumCard from '../components/EthereumCard';
 import Loader from '../components/Loader';
-import { EthereumContext } from '../context/EthereumContext';
+import { EthereumContext, supportedNetworks } from '../context/EthereumContext';
 import './HomePage.css';
 
 function HomePage() {
@@ -48,7 +48,9 @@ function HomePage() {
                   <div>
                     <button
                       type="submit"
-                      disabled={account.network.chainId !== 5}
+                      disabled={
+                        !supportedNetworks.includes(account.network.chainId)
+                      }
                     >
                       Donate
                     </button>

@@ -9,7 +9,13 @@ import { ethers } from 'ethers';
 
 import contractJson from '../contracts/DonateCrypto.json';
 const contractAbi = contractJson.abi;
-const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS;
+
+export const supportedNetworks = [3, 4, 5, 11155111];
+
+const contractAddressRopsten = import.meta.env.VITE_CONTRACT_ADDRESS_ROPSTEN;
+const contractAddressRinkeby = import.meta.env.VITE_CONTRACT_ADDRESS_RINKEBY;
+const contractAddressGoerli = import.meta.env.VITE_CONTRACT_ADDRESS_GOERLI;
+const contractAddressSepolia = import.meta.env.VITE_CONTRACT_ADDRESS_SEPOLIA;
 
 const { ethereum } = window as any;
 
@@ -95,7 +101,31 @@ export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
     if (ethereumExists()) {
       try {
         const provider = new ethers.providers.Web3Provider(ethereum);
+        const network = await provider.getNetwork();
         const signer = await provider.getSigner();
+
+        let contractAddress;
+
+        switch (network.chainId) {
+          case 3:
+            contractAddress = contractAddressRopsten;
+            break;
+
+          case 4:
+            contractAddress = contractAddressRinkeby;
+            break;
+
+          case 5:
+            contractAddress = contractAddressGoerli;
+            break;
+
+          case 11155111:
+            contractAddress = contractAddressSepolia;
+            break;
+
+          default:
+            throw new Error();
+        }
 
         const contract = new ethers.Contract(
           contractAddress,
@@ -154,8 +184,8 @@ export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
             network: { name: network.name, chainId: network.chainId },
           });
 
-          if (network.chainId !== 5) {
-            setErrorMessage(`Please connect to Goerli network!`);
+          if (!supportedNetworks.includes(network.chainId)) {
+            setErrorMessage(`Unsupported network!`);
           } else {
             setErrorMessage('');
           }
