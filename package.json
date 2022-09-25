@@ -15,6 +15,7 @@
     "react-icons": "^4.4.0"
   },
   "devDependencies": {
+    "@metamask/providers": "^9.1.0",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "@vitejs/plugin-react": "^2.1.0",

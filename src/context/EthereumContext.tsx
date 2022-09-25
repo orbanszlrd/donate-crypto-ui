@@ -1,10 +1,5 @@
-import {
-  createContext,
-  FunctionComponent,
-  ReactNode,
-  useEffect,
-  useState,
-} from 'react';
+import { createContext, FunctionComponent, useEffect, useState } from 'react';
+import { MetaMaskInpageProvider } from '@metamask/providers';
 import { ethers } from 'ethers';
 
 import contractJson from '../contracts/DonateCrypto.json';
@@ -17,38 +12,15 @@ const contractAddressRinkeby = import.meta.env.VITE_CONTRACT_ADDRESS_RINKEBY;
 const contractAddressGoerli = import.meta.env.VITE_CONTRACT_ADDRESS_GOERLI;
 const contractAddressSepolia = import.meta.env.VITE_CONTRACT_ADDRESS_SEPOLIA;
 
-const { ethereum } = window as any;
+declare global {
+  interface Window {
+    ethereum: MetaMaskInpageProvider;
+  }
+}
 
-export type AccountType = {
-  address: string;
-  balance: string;
-  network: {
-    name: string;
-    chainId: number;
-  };
-};
+const { ethereum } = window;
 
-export type EthereumContextType = {
-  isLoading: boolean;
-  errorMessage: string;
-  provider: ethers.providers.Provider | null;
-  network: ethers.providers.Network | null;
-  contract: ethers.Contract | null;
-  signer: ethers.Signer | null;
-  account: AccountType;
-  contractNetwork: ethers.providers.Network | null;
-  contractBalance: string;
-  connectAccount(): void;
-  donateCrypto(amount: string): void;
-};
-
-export type EthereumProviderProps = {
-  children: ReactNode;
-};
-
-export const EthereumContext = createContext<EthereumContextType>(
-  {} as EthereumContextType
-);
+export const EthereumContext = createContext<EthereumContextType | null>(null);
 
 export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
   children,
@@ -185,7 +157,9 @@ export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
           });
 
           if (!supportedNetworks.includes(network.chainId)) {
-            setErrorMessage(`Unsupported network!`);
+            setErrorMessage(
+              `Your wallet is connected to ${network.name} (${network.chainId}) network. This network is not supported.`
+            );
           } else {
             setErrorMessage('');
           }
