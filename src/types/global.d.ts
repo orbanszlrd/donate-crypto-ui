@@ -2,7 +2,19 @@ type ErrorProps = {
   message: string;
 };
 
-type AccountType = {
+type SolidityContractType = {
+  abi: any[];
+  address: {
+    [key: string]: string;
+  };
+};
+
+type ContractType = {
+  address: string;
+  balance: string;
+};
+
+type SignerType = {
   address: string;
   balance: string;
   network: {
@@ -12,21 +24,16 @@ type AccountType = {
 };
 
 type EthereumCardProps = {
-  account: AccountType;
+  account: SignerType | null;
 };
 
 type EthereumContextType = {
   isLoading: boolean;
   errorMessage: string;
-  provider: ethers.providers.Provider | null;
-  network: ethers.providers.Network | null;
-  contract: ethers.Contract | null;
-  signer: ethers.Signer | null;
-  account: AccountType;
-  contractNetwork: ethers.providers.Network | null;
-  contractBalance: string;
-  connectAccount(): void;
-  donateCrypto(amount: string): void;
+  signer: SignerType | null;
+  contract: ContractType | null;
+  connectWallet(): void;
+  donate(amount: string): void;
 };
 
 type EthereumProviderProps = {

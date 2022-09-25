@@ -2,18 +2,13 @@ import { useContext, useState } from 'react';
 import Error from '../components/Error';
 import EthereumCard from '../components/EthereumCard';
 import Loader from '../components/Loader';
-import { EthereumContext, supportedNetworks } from '../context/EthereumContext';
+import { supportedNetworks } from '../constants';
+import { EthereumContext } from '../context/EthereumContext';
 import './HomePage.css';
 
 function HomePage() {
-  const {
-    isLoading,
-    errorMessage,
-    account,
-    contractBalance,
-    connectAccount,
-    donateCrypto,
-  } = useContext(EthereumContext);
+  const { isLoading, errorMessage, signer, contract, connectWallet, donate } =
+    useContext(EthereumContext);
 
   const minAmount = '0.001';
   const [amount, setAmount] = useState('0.1');
@@ -25,15 +20,15 @@ function HomePage() {
         <Loader />
       ) : (
         <>
-          <h4 style={{ textShadow: '1px 1px 8px #242424' }}>
-            Contract balance: {contractBalance} ETH
+          <h4 title={contract?.address}>
+            Contract balance: {contract?.balance} ETH
           </h4>
-          <EthereumCard account={account} />
+          <EthereumCard account={signer} />
 
           <section>
-            {!account || !account.address ? (
+            {!signer || !signer.address ? (
               <div>
-                <button type="button" onClick={connectAccount}>
+                <button type="button" onClick={connectWallet}>
                   Connect Wallet
                 </button>
               </div>
@@ -41,7 +36,7 @@ function HomePage() {
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  donateCrypto(amount);
+                  donate(amount);
                 }}
               >
                 <div className="donation-form">
@@ -49,7 +44,7 @@ function HomePage() {
                     <button
                       type="submit"
                       disabled={
-                        !supportedNetworks.includes(account.network.chainId)
+                        !supportedNetworks.includes(signer.network.chainId)
                       }
                     >
                       Donate
