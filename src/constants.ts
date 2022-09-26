@@ -37,3 +37,7 @@ export const donateCrypto: SolidityContractType = {
       import.meta.env.VITE_CONTRACT_ADDRESS_SEPOLIA || ('' as string),
   },
 };
+
+export const ERROR_METAMASK_NOT_INSTALLED = 'MetaMask not installed';
+export const ERROR_UNSUPPORTED_NETWORK =
+  'Your wallet is connected to an unsupported Network';

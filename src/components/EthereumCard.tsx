@@ -8,14 +8,16 @@ const EthereumCard = ({ account }: EthereumCardProps) => {
       <div className="logo">
         <FaEthereum size={32} />
       </div>
-
       {account && account.address && account.balance ? (
         <>
+          <div
+            className="network"
+            title={`${account.network.name}: ${account.network.chainId}`}
+          >
+            {account.network.name} network
+          </div>
           <div className="account" title={account.address}>
             Address: {addressShortener(account.address)}
-          </div>
-          <div className="network" title={account.network.name}>
-            {account.network.name} network
           </div>
           <div className="balance" title={account.balance}>
             Balance: {Number(account.balance).toFixed(4)} ETH

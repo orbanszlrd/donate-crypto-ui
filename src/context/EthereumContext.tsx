@@ -1,7 +1,13 @@
 import { createContext, FunctionComponent, useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 
-import { donateCrypto, ethereum, supportedNetworks } from '../constants';
+import {
+  donateCrypto,
+  ERROR_METAMASK_NOT_INSTALLED,
+  ERROR_UNSUPPORTED_NETWORK,
+  ethereum,
+  supportedNetworks,
+} from '../constants';
 
 export const EthereumContext = createContext<EthereumContextType>(
   {} as EthereumContextType
@@ -93,9 +99,7 @@ export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
           });
 
           if (!supportedNetworks.includes(ethersNetwork.chainId)) {
-            setErrorMessage(
-              `Your wallet is connected to ${ethersNetwork.name} (${ethersNetwork.chainId}) network. This network is not supported.`
-            );
+            setErrorMessage(ERROR_UNSUPPORTED_NETWORK);
           } else {
             setErrorMessage('');
           }
@@ -110,7 +114,7 @@ export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
   const ethereumExists = (): boolean => {
     try {
       if (typeof window.ethereum === 'undefined') {
-        setErrorMessage('MetaMask is not Installed');
+        setErrorMessage(ERROR_METAMASK_NOT_INSTALLED);
         return false;
       }
     } catch (error: any) {
