@@ -16,7 +16,9 @@ export const EthereumContext = createContext<EthereumContextType>(
 export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
   children,
 }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [loaderProps, setLoaderProps] = useState<LoaderProps | null>(null);
+
   const [errorMessage, setErrorMessage] = useState('');
   const [ethersProvider, setEthersProvider] =
     useState<ethers.providers.Provider | null>(null);
@@ -31,22 +33,43 @@ export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
     if (ethereumExists()) {
       setIsLoading(true);
 
+      setLoaderProps({
+        title: 'Waiting for confirmation',
+        description:
+          'Transactions have been initiated. Waiting for confirmation.',
+      });
+
       try {
         if (ethersProvider && ethersSigner && ethersContract) {
           const tx = await ethersContract.donate({
             value: ethers.utils.parseEther(amount),
           });
 
-          const receipt = await transactionReceipt(tx, ethersProvider);
+          setLoaderProps({
+            title: 'Transaction confirmed',
+            description: `You have confirmed to donate ${amount} ETH.`,
+          });
 
-          console.log(receipt);
+          await transactionReceipt(tx, ethersProvider);
+
+          setLoaderProps({
+            title: 'Successful transaction',
+            description: `You have successfully donated ${amount} ETH. Thank You!`,
+          });
 
           refreshEthereumData();
-          setIsLoading(false);
         }
       } catch (error) {
-        setIsLoading(false);
+        setLoaderProps({
+          title: 'Transactions rejected',
+          description: 'You have rejected the transaction.',
+        });
       }
+
+      setTimeout(() => {
+        setLoaderProps(null);
+        setIsLoading(false);
+      }, 2000);
     }
   };
 
@@ -182,6 +205,7 @@ export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
     <EthereumContext.Provider
       value={{
         isLoading,
+        loaderProps,
         errorMessage,
         contract,
         signer,

@@ -2,6 +2,11 @@ type ErrorProps = {
   message: string;
 };
 
+type LoaderProps = {
+  title: string;
+  description: string;
+};
+
 type SolidityContractType = {
   abi: any[];
   address: {
@@ -29,6 +34,7 @@ type EthereumCardProps = {
 
 type EthereumContextType = {
   isLoading: boolean;
+  loaderProps: LoaderProps | null;
   errorMessage: string;
   signer: SignerType | null;
   contract: ContractType | null;

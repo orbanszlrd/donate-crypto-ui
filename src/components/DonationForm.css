@@ -7,3 +7,9 @@
 .DonationForm input {
   width: 75%;
 }
+
+@media screen and (max-width: 640px) {
+  .DonationForm input {
+    width: 70%;
+  }
+}

@@ -10,9 +10,9 @@ function HomePage() {
 
   return (
     <div className="HomePage">
-      <h4 title={contract?.address}>
+      <h5 title={contract?.address}>
         Contract balance: {contract?.balance ?? 0} ETH
-      </h4>
+      </h5>
       <EthereumCard account={signer} />
       {!signer || !signer.address ? <ConnectForm /> : <DonationForm />}
     </div>

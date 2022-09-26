@@ -1,4 +1,4 @@
-.loader {
+.Loader {
   position: absolute;
   display: block;
   top: 0;
@@ -8,20 +8,30 @@
   z-index: 1;
 }
 
-.spinner {
+.Loader section {
   position: absolute;
   top: 50%;
   left: 50%;
+  width: 100%;
+  transform: translate(-50%, -50%);
   text-align: center;
+}
+
+.Loader section div {
+  margin: 1rem;
+  font-size: 1.2rem;
+}
+
+.spinner {
   font-size: 4rem;
   animation: spin infinite 3s linear;
 }
 
 @keyframes spin {
   from {
-    transform: translate(-50%) rotate(0deg);
+    transform: rotate(0deg);
   }
   to {
-    transform: translate(-50%) rotate(360deg);
+    transform: rotate(360deg);
   }
 }

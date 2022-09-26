@@ -1,8 +1,22 @@
 .HomePage {
-  padding: 1rem 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 24rem;
 }
 
-.HomePage h4 {
+.HomePage h5 {
   text-shadow: 1px 1px 8px #242424;
+}
+
+@media screen and (max-width: 640px) {
+  .HomePage {
+    width: 20rem;
+  }
+
+  .HomePage h5 {
+    font-size: 0.9rem;
+    text-shadow: 1px 1px 8px #242424;
+  }
 }
