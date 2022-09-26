@@ -90,11 +90,33 @@ export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
 
   const connectWallet = async () => {
     if (ethereumExists()) {
+      setIsLoading(true);
+
+      setLoaderProps({
+        title: 'Connect with MetaMask',
+        description: 'Waiting for confirmation.',
+      });
+
       try {
         await ethereum.request({
           method: 'eth_requestAccounts',
         });
-      } catch (error) {}
+
+        setLoaderProps({
+          title: 'Connect with MetaMask',
+          description: 'Connection confirmed.',
+        });
+      } catch (error) {
+        setLoaderProps({
+          title: 'Connect with MetaMask',
+          description: 'Connection rejected.',
+        });
+      }
+
+      setTimeout(() => {
+        setLoaderProps(null);
+        setIsLoading(false);
+      }, 1000);
     }
   };
 
