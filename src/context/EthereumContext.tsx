@@ -61,8 +61,50 @@ export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
         }
       } catch (error) {
         setLoaderProps({
-          title: 'Transactions rejected',
-          description: 'You have rejected the transaction.',
+          title: 'Failed transaction',
+          description: 'The transaction failed.',
+        });
+      }
+
+      setTimeout(() => {
+        setLoaderProps(null);
+        setIsLoading(false);
+      }, 2000);
+    }
+  };
+
+  const withdraw = async () => {
+    if (ethereumExists()) {
+      setIsLoading(true);
+
+      setLoaderProps({
+        title: 'Waiting for confirmation',
+        description:
+          'Transactions have been initiated. Waiting for confirmation.',
+      });
+
+      try {
+        if (ethersProvider && ethersSigner && ethersContract) {
+          const tx = await ethersContract.withdraw();
+
+          setLoaderProps({
+            title: 'Transaction confirmed',
+            description: `You have confirmed to withdraw the crypto from the contract.`,
+          });
+
+          await transactionReceipt(tx, ethersProvider);
+
+          setLoaderProps({
+            title: 'Successful transaction',
+            description: `You have successfully withdrawn the crypto from the contract.`,
+          });
+
+          refreshEthereumData();
+        }
+      } catch (error) {
+        setLoaderProps({
+          title: 'Failed transaction',
+          description: 'The transaction failed.',
         });
       }
 
@@ -148,7 +190,6 @@ export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
           } else {
             setErrorMessage('');
           }
-        } else {
         }
       } catch (error) {
         setSigner(null);
@@ -189,11 +230,13 @@ export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
 
           setEthersContract(ethersContract);
 
+          const owner = await ethersContract.getContractOwner();
+
           const balance = ethers.utils.formatEther(
             await ethersProvider.getBalance(ethersContract.address)
           );
 
-          setContract({ address: ethersContract.address, balance });
+          setContract({ address: ethersContract.address, owner, balance });
         } else {
           setEthersContract(null);
           setContract(null);
@@ -233,6 +276,7 @@ export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
         signer,
         connectWallet,
         donate,
+        withdraw,
       }}
     >
       {children}

@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import ConnectForm from '../components/ConnectForm';
 import DonationForm from '../components/DonationForm';
 import EthereumCard from '../components/EthereumCard';
+import WithdrawForm from '../components/WithdrawForm';
 import { EthereumContext } from '../context/EthereumContext';
 import './HomePage.css';
 
@@ -15,6 +16,9 @@ function HomePage() {
       </h5>
       <EthereumCard account={signer} />
       {!signer || !signer.address ? <ConnectForm /> : <DonationForm />}
+      {signer && contract && signer.address == contract.owner ? (
+        <WithdrawForm />
+      ) : null}
     </div>
   );
 }

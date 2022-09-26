@@ -1,0 +1,15 @@
+.WithdrawForm div {
+  margin: auto;
+  padding: 0;
+}
+
+.WithdrawForm button {
+  background-image: linear-gradient(180deg, lightgray, gray);
+  border-color: whitesmoke;
+  color: #141414;
+}
+
+.WithdrawForm button:hover:enabled {
+  background-image: linear-gradient(180deg, white, gray);
+  border-color: white;
+}

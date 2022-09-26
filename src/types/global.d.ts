@@ -16,6 +16,7 @@ type SolidityContractType = {
 
 type ContractType = {
   address: string;
+  owner: string;
   balance: string;
 };
 
@@ -40,6 +41,7 @@ type EthereumContextType = {
   contract: ContractType | null;
   connectWallet(): void;
   donate(amount: string): void;
+  withdraw(): void;
 };
 
 type EthereumProviderProps = {
