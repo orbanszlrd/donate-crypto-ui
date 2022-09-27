@@ -4,7 +4,8 @@
 
 div,
 article,
-section {
+section,
+footer {
   margin: 0 auto;
 }
 
@@ -55,4 +56,12 @@ input:focus {
 
 label {
   padding: 0.8rem 0.4rem;
+}
+
+a {
+  color: gray;
+}
+
+a:hover {
+  color: lightgrey;
 }

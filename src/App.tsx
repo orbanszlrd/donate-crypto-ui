@@ -5,6 +5,7 @@ import { EthereumContext } from './context/EthereumContext';
 import { useContext } from 'react';
 import Error from './components/Error';
 import Loader from './components/Loader';
+import Footer from './components/Footer';
 
 function App() {
   const { isLoading, errorMessage, loaderProps } = useContext(EthereumContext);
@@ -20,6 +21,7 @@ function App() {
       ) : (
         <HomePage />
       )}
+      <Footer />
     </main>
   );
 }

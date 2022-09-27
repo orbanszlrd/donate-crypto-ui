@@ -75,7 +75,7 @@
   right: 1rem;
 }
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 480px) {
   .ethereum-card {
     width: 20rem;
     height: 11rem;
