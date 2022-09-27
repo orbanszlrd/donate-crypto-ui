@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { EthereumContext } from '../context/EthereumContext';
 import './WithdrawForm.css';
 
-const WithdrawComponent = () => {
+const WithdrawForm = () => {
   const { withdraw } = useContext(EthereumContext);
 
   const withdrawCrypto = (e: React.FormEvent<HTMLFormElement>) => {
@@ -19,4 +19,4 @@ const WithdrawComponent = () => {
   );
 };
 
-export default WithdrawComponent;
+export default WithdrawForm;

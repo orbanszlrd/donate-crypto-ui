@@ -28,6 +28,7 @@ export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
   const [ethersSigner, setEthersSigner] = useState<ethers.Signer | null>(null);
   const [contract, setContract] = useState<ContractType | null>(null);
   const [signer, setSigner] = useState<SignerType | null>(null);
+  const [donors, setDonors] = useState<string[]>([]);
 
   const donate = async (amount: string) => {
     if (ethereumExists()) {
@@ -199,15 +200,13 @@ export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
 
   const ethereumExists = (): boolean => {
     try {
-      if (typeof window.ethereum === 'undefined') {
-        setErrorMessage(ERROR_METAMASK_NOT_INSTALLED);
-        return false;
+      if (ethereum.isMetaMask) {
+        return true;
       }
-    } catch (error: any) {
-      return false;
-    }
+    } catch (error: any) {}
 
-    return true;
+    setErrorMessage(ERROR_METAMASK_NOT_INSTALLED);
+    return false;
   };
 
   const retrieveEthereumData = async () => {
@@ -237,13 +236,17 @@ export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
           );
 
           setContract({ address: ethersContract.address, owner, balance });
+
+          setDonors(await ethersContract.getDonors());
         } else {
           setEthersContract(null);
           setContract(null);
+          setDonors([]);
         }
       } catch (error) {
         setEthersContract(null);
         setContract(null);
+        setDonors([]);
       }
     }
   };
@@ -253,6 +256,9 @@ export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
   };
 
   const init = async () => {
+    ethereum.on('connect', refreshEthereumData);
+    ethereum.on('disconnect', refreshEthereumData);
+    ethereum.on('message', refreshEthereumData);
     ethereum.on('chainChanged', refreshEthereumData);
     ethereum.on('accountsChanged', refreshEthereumData);
     refreshEthereumData();
@@ -274,6 +280,7 @@ export const EthereumProvider: FunctionComponent<EthereumProviderProps> = ({
         errorMessage,
         contract,
         signer,
+        donors,
         connectWallet,
         donate,
         withdraw,

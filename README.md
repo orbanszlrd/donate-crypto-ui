@@ -38,6 +38,7 @@ Run `yarn build` or `npm run build` to build the project
 [web3.js - Ethereum JavaScript API](https://web3js.readthedocs.io/)  
 [Hardhat - Ethereum Development Environment for Professionals](https://hardhat.org/)  
 [MetaMask - A Crypto Wallet & Gateway to Blockchain Apps](https://metamask.io/)  
+[MetaMask Docs - Getting Started](https://docs.metamask.io)  
 [Alchemy - The Web3 Development Platform](https://alchemy.com/?r=7b980bb14402be0b)  
 [Goerli Faucet - Get 0.5 Goerli ETH / day](https://goerlifaucet.com/)  
 [Chainlink - Securely connect Smart Contracts with off-chain Data and Services](https://chain.link/)  

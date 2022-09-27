@@ -38,6 +38,7 @@ type EthereumContextType = {
   loaderProps: LoaderProps | null;
   errorMessage: string;
   signer: SignerType | null;
+  donors: string[];
   contract: ContractType | null;
   connectWallet(): void;
   donate(amount: string): void;
