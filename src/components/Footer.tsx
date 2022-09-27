@@ -1,4 +1,11 @@
-import { FaGithub, FaLinkedin, FaPaypal } from 'react-icons/fa';
+import {
+  FaFacebook,
+  FaGithub,
+  FaInstagram,
+  FaInstagramSquare,
+  FaLinkedin,
+  FaPaypal,
+} from 'react-icons/fa';
 import './Footer.css';
 
 const Footer = () => {
@@ -22,6 +29,26 @@ const Footer = () => {
           rel="noreferrer"
         >
           <FaLinkedin size={24}></FaLinkedin>
+        </a>
+      </span>
+      <span>
+        <a
+          href="https://www.facebook.com/opofa"
+          title="Facebook"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <FaFacebook size={24}></FaFacebook>
+        </a>
+      </span>
+      <span>
+        <a
+          href="https://www.instagram.com/orbanszlrd"
+          title="Instagram"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <FaInstagramSquare size={24}></FaInstagramSquare>
         </a>
       </span>
       <span>
